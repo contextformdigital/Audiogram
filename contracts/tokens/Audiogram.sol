@@ -3,6 +3,7 @@ pragma solidity ^0.4.24;
 /**
  * This contract uses the 0xcert.org implementation of the ERC-721 NFT standard for the
  * Ethereum Blockchain.
+ * https://github.com/0xcert/ethereum-erc721
  */
 import "../tokens/NFTokenMetadata.sol";
 import "@0xcert/ethereum-utils/contracts/ownership/Ownable.sol";
