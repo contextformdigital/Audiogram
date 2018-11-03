@@ -26,6 +26,22 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	}
 
 	/**
+	 * @dev Metadata struct that contains artist and song metadata.
+	 */
+	struct SongMetadata {
+		bytes32 title;
+		bytes32 artist;
+		bytes32 album;
+		bytes32 year;
+		bytes32 songHash;
+	}
+
+	/**
+	 * Assign Metadata struct to public variable songs.
+	 */
+	SongMetadata[] public songs;
+
+	/**
 	 * @dev mint creates a new NFT to the owner.
 	 * @param _owner is the address that owns the contract.
 	 * @param _id is the identification of the token.
