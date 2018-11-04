@@ -33,7 +33,6 @@ contract Audiogram is NFTokenMetadata, Ownable {
 		string artist;
 		string album;
 		uint256 year;
-		string songHash;
 		uint256 id;
 	}
 
@@ -49,21 +48,22 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	 * @param _artist Name of the artist.
 	 * @param _album is the Album name.
 	 * @param _year is the year the album is released.
-	 * @param _songHash is the hash of the song stored in IPFS.
+	 * @param _id is the for the metadata and corresponding NFT.
 	 */
-	function submitMetadata(string _title, string _artist, string _album, uint256 _year, string _songHash, uint256 _id) public {
+	function submitMetadata(string _title, string _artist, string _album, uint256 _year, uint256 _id) public {
 		submittedSongs[msg.sender].push(SongMetadata({
 			title: _title,
 			artist: _artist,
 			album: _album,
 			year: _year,
-			songHash: _songHash,
 			id: _id
 		}));
 	}
 
-	// test if submit function works
-	// THIS FUNCTION IS ONLY FOR TESTING!
+	/**
+	 * @dev getMetadata returns the data from the struct
+	 * @param _id is the corresponding metadata and NFT identification.
+	 */
 	function getMetadata(uint256 _id) public view returns (string, string, string, uint256) {
 		return (submittedSongs[msg.sender][_id].title,
 				submittedSongs[msg.sender][_id].artist,
