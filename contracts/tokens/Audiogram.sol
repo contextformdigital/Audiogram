@@ -65,12 +65,10 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	// test if submit function works
 	// THIS FUNCTION IS ONLY FOR TESTING!
 	function getMetadata(uint256 _id) public view returns (string, string, string, uint256) {
-		return {
-			title: submittedSongs[msg.sender][_id].title,
-			artist: submittedSongs[msg.sender][_id].artist,
-			album: submittedSongs[msg.sender][_id].album,
-			year: submittedSongs[msg.sender][_id].year}
-		};
+		return (submittedSongs[msg.sender][_id].title,
+				submittedSongs[msg.sender][_id].artist,
+				submittedSongs[msg.sender][_id].album,
+				submittedSongs[msg.sender][_id].year);
 	}
 
 	/**
