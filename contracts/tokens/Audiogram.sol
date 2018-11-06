@@ -37,10 +37,36 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	}
 
 	/**
-	 * Assign Metadata struct to public variable songs.
+	 * @dev Media stores consumer information.
 	 */
+	struct Media {
+		address creator;
+		bytes32 title;
+		uint256 price;
+		address[] consumer;
+	}
+
+	/**
+	 * @dev Creator struct of the creator media list.
+	 */
+	struct Creator {
+		string[] creatorMediaList;
+	}
+
+	/**
+	 * @dev Conssumer struct of the consumer list.
+	 */
+	struct Consumer {
+		string[] consumerMediaList;
+	}
+
+	string[] public allMedia;
 	SongMetadata[] public songs;
+	mapping(address => uint256) public wallet;
 	mapping(address => SongMetadata[]) public submittedSongs;
+	mapping(string => Media) mediaStructs;
+	mapping(address => Creator) creatorStructs;
+	mapping(address => Consumer) consumerStructs;
 
 	/**
 	 * @dev submitMetadata.
@@ -69,6 +95,22 @@ contract Audiogram is NFTokenMetadata, Ownable {
 				submittedSongs[msg.sender][_id].artist,
 				submittedSongs[msg.sender][_id].album,
 				submittedSongs[msg.sender][_id].year);
+	}
+
+	/**
+	 * @dev buy functionality
+	 * DOES NOT WORK YET! STILL TESTING!
+	 */
+	function buy(string code) payable public returns (bool) {
+		uint256 amount = mediaStructs[code].price;
+		address receiver = mediaStructs[code].creator;
+		if (wallet[msg.sender] < mediaStructs[code].price) return false;
+		wallet[msg.sender] -= amount;
+		wallet[receiver] += amount;
+		emit Transfer(msg.sender, receiver, amount);
+		consumerStructs[msg.sender].consumerMediaList.push(code);
+		mediaStructs[code].consumer.push(msg.sender);
+		return true;
 	}
 
 	/**
