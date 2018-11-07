@@ -99,17 +99,17 @@ contract Audiogram is NFTokenMetadata, Ownable {
 
 	/**
 	 * @dev buy functionality
-	 * DOES NOT WORK YET! STILL TESTING!
+	 * @param hash is the output of the submitMetadata function.
 	 */
-	function buy(string code) payable public returns (bool) {
-		uint256 amount = mediaStructs[code].price;
-		address receiver = mediaStructs[code].creator;
-		if (wallet[msg.sender] < mediaStructs[code].price) return false;
+	function buy(string hash) payable public returns (bool) {
+		uint256 amount = mediaStructs[hash].price;
+		address receiver = mediaStructs[hash].creator;
+		if (wallet[msg.sender] < mediaStructs[hash].price) return false;
 		wallet[msg.sender] -= amount;
 		wallet[receiver] += amount;
 		emit Transfer(msg.sender, receiver, amount);
-		consumerStructs[msg.sender].consumerMediaList.push(code);
-		mediaStructs[code].consumer.push(msg.sender);
+		consumerStructs[msg.sender].consumerMediaList.push(hash);
+		mediaStructs[hash].consumer.push(msg.sender);
 		return true;
 	}
 
