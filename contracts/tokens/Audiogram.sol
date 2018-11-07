@@ -41,7 +41,7 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	 */
 	struct Media {
 		address creator;
-		bytes32 title;
+		string title;
 		uint256 price;
 		address[] consumer;
 	}
@@ -60,6 +60,7 @@ contract Audiogram is NFTokenMetadata, Ownable {
 		string[] consumerMediaList;
 	}
 
+	string public ipfsHash;
 	string[] public allMedia;
 	SongMetadata[] public songs;
 	mapping(address => uint256) public wallet;
