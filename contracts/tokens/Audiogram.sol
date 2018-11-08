@@ -34,6 +34,7 @@ contract Audiogram is NFTokenMetadata, Ownable {
 		string album;
 		uint256 year;
 		uint256 id;
+		uint256 price;
 	}
 
 	/**
@@ -69,6 +70,9 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	mapping(address => Creator) creatorStructs;
 	mapping(address => Consumer) consumerStructs;
 
+
+
+
 	/**
 	 * @dev submitMetadata.
 	 * @param _title Song title.
@@ -77,13 +81,14 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	 * @param _year is the year the album is released.
 	 * @param _id is the for the metadata and corresponding NFT.
 	 */
-	function submitMetadata(string _title, string _artist, string _album, uint256 _year, uint256 _id) public {
+	function submitMetadata(string _title, string _artist, string _album, uint256 _year, uint256 _id, uint256 _price) public {
 		submittedSongs[msg.sender].push(SongMetadata({
 			title: _title,
 			artist: _artist,
 			album: _album,
 			year: _year,
-			id: _id
+			id: _id,
+			price: _price
 		}));
 	}
 
@@ -91,11 +96,12 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	 * @dev getMetadata returns the data from the struct
 	 * @param _id is the corresponding metadata and NFT identification.
 	 */
-	function getMetadata(uint256 _id) public view returns (string, string, string, uint256) {
+	function getMetadata(uint256 _id) public view returns (string, string, string, uint256, uint256) {
 		return (submittedSongs[msg.sender][_id].title,
 				submittedSongs[msg.sender][_id].artist,
 				submittedSongs[msg.sender][_id].album,
-				submittedSongs[msg.sender][_id].year);
+				submittedSongs[msg.sender][_id].year,
+				submittedSongs[msg.sender][_id].price);
 	}
 
 	/**
