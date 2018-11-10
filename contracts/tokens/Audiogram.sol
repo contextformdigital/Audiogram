@@ -71,8 +71,6 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	mapping(address => Consumer) consumerStructs;
 
 
-
-
 	/**
 	 * @dev submitMetadata.
 	 * @param _title Song title.
@@ -107,6 +105,7 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	/**
 	 * @dev buy functionality
 	 * @param hash is the output of the submitMetadata function.
+	 * TODO: Understand the flow of creating the metadata -> mint -> buy
 	 */
 	function buy(string hash) payable public returns (bool) {
 		uint256 amount = mediaStructs[hash].price;
