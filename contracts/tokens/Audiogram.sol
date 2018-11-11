@@ -60,7 +60,6 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	mapping(address => uint256) public wallet;
 	mapping(address => SongMetadata[]) public submittedSongs;
 	mapping(string => Media) mediaStructs;
-	mapping(address => Creator) creatorStructs;
 	mapping(address => Consumer) consumerStructs;
 
 
