@@ -48,14 +48,7 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	}
 
 	/**
-	 * @dev Creator struct of the creator media list.
-	 */
-	struct Creator {
-		string[] creatorMediaList;
-	}
-
-	/**
-	 * @dev Conssumer struct of the consumer list.
+	 * @dev Consumer struct of the consumer list.
 	 */
 	struct Consumer {
 		string[] consumerMediaList;
