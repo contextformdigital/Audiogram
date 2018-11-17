@@ -3,7 +3,9 @@ const Audiogram = artifacts.require("./Audiogram.sol");
 contract("Audiogram Contract", accounts => {
 
 	let contract;
-	let [one, two] = accounts;
+	let [account0, account1] = accounts;
+	let tokenName = 'Audiogram';
+	let tokenSymbol = 'AUDIO';
 	let artist = 'New Artist';
 	let song = 'New Song';
 	let album = 'New Album';
@@ -18,11 +20,18 @@ contract("Audiogram Contract", accounts => {
 
 	it("verifies owner of conract", async () => {
 		const owner = await contract.owner.call();
-		assert.strictEqual(owner, one);
+		assert.strictEqual(owner, account0);
+	});
+
+	it('verifies the name and symbol of the contract', async () => {
+		const name = await contract.name.call();
+		const symbol = await contract.symbol.call();
+		assert.strictEqual(name, tokenName);
+		assert.strictEqual(symbol, tokenSymbol);
 	});
 
 	it('Submits and gets song metadata', async () => {
-		hashArr.push(await contract.submitMetadata(artist, song, album, year, id, price, { from: one, gas: 200000 }));
+		hashArr.push(await contract.submitMetadata(artist, song, album, year, id, price, { from: account0, gas: 200000 }));
 		let data = await contract.getMetadata(id);
 		assert.strictEqual(data[0], artist);
 		assert.strictEqual(data[1], song);
@@ -31,16 +40,24 @@ contract("Audiogram Contract", accounts => {
 		assert.strictEqual(data[4].toString(), '1');
 	});
 
-	it('mints new token', async () => {
-		await contract.mint(one, 1, { from: one });
-		const newBalance = await contract.balanceOf(one);
+	it('mints NFT to owner', async () => {
+		await contract.mint(account0, 1, { from: account0 });
+		const newBalance = await contract.balanceOf(account0);
 		assert.strictEqual(newBalance.toString(), '1');
 	});
 
+	it('transfer NFT to new wallet address', async () => {
+		await contract.safeTransferFrom(account0, account1, 1, { from: account0 });
+		const balanceOne = await contract.balanceOf(account0);
+		const balanceTwo = await contract.balanceOf(account1);
+		assert.strictEqual(balanceOne.toString(), '0');
+		assert.strictEqual(balanceTwo.toString(), '1');
+	});
+
 	it('buys a token', async () => {
-		hashArr.push(await contract.submitMetadata(artist, song, album, year, id, price, { from: one, gas: 200000 }));
+		hashArr.push(await contract.submitMetadata(artist, song, album, year, id, price, { from: account0, gas: 200000 }));
 		const txHash = hashArr[0]['tx'];
-		let output = await contract.buy(txHash, { from: one, gas: 200000 });
+		let output = await contract.buy(txHash, { from: account0, gas: 200000 });
 		assert.strictEqual(typeof output, 'object');
 	});
 
