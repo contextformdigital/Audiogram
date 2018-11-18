@@ -54,6 +54,14 @@ contract("Audiogram Contract", accounts => {
 		assert.strictEqual(balanceTwo.toString(), '1');
 	});
 
+	it('transfers the NFT back to the original address', async () => {
+		await contract.safeTransferFrom(account1, account0, 1, { from: account1 });
+		const balanceOne = await contract.balanceOf(account0);
+		const balanceTwo = await contract.balanceOf(account1);
+		assert.strictEqual(balanceOne.toString(), '1');
+		assert.strictEqual(balanceTwo.toString(), '0');
+	});
+
 	it('buys a token', async () => {
 		hashArr.push(await contract.submitMetadata(artist, song, album, year, id, price, { from: account0, gas: 200000 }));
 		const txHash = hashArr[0]['tx'];
