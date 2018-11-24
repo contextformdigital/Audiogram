@@ -62,6 +62,12 @@ contract("Audiogram Contract", accounts => {
 		assert.strictEqual(balanceTwo.toString(), '0');
 	});
 
+	it('burns the NFT', async () => {
+		await contract.burn(account0, 1, { from: account0 });
+		const newBalance = await contract.balanceOf(account0);
+		assert.strictEqual(newBalance.toString(), '0');
+	});
+
 	it('buys a token', async () => {
 		hashArr.push(await contract.submitMetadata(artist, song, album, year, id, price, { from: account0, gas: 200000 }));
 		const txHash = hashArr[0]['tx'];
