@@ -121,6 +121,14 @@ contract Audiogram is NFTokenMetadata, Ownable {
 	}
 
 	/**
+	 * NEW IDEA FOR "MINT" FUNCTION
+	 */
+	//function _mintToken(address _to, uint256 _tokenId, uint256 _songNumber, string _tokenURI) internal {
+	 //	super._mint(_to, _tokenId);
+	 //	super._setTokenURI(_tokenId, _tokenURI);
+	 //}
+
+	/**
 	 * @dev burn destroys the token.
 	 * @param _owner is the address that owns the contract.
 	 * @param _id is the identification of the token.
