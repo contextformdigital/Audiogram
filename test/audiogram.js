@@ -23,6 +23,11 @@ contract("Audiogram Contract", accounts => {
 		assert.strictEqual(owner, account0);
 	});
 
+	it("verifies the owner is the account 0", async () => {
+		const owner = await contract.owner.call();
+		assert(owner, account1, 'False');
+	});
+
 	it('verifies the name and symbol of the contract', async () => {
 		const name = await contract.name.call();
 		const symbol = await contract.symbol.call();
@@ -45,6 +50,7 @@ contract("Audiogram Contract", accounts => {
 		const newBalance = await contract.balanceOf(account0);
 		assert.strictEqual(newBalance.toString(), '1');
 	});
+
 
 	it('transfer NFT to new wallet address', async () => {
 		await contract.safeTransferFrom(account0, account1, 1, { from: account0 });
